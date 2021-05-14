@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
+const insertClient = require('./insertclients');
 
 app.use(function(req, res, next){
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -11,9 +12,9 @@ app.use(function(req, res, next){
     next();
 });  
 
-const mysqlConnection = require('../database');
+const mysqlConnection = require('../../database');
 
-router.get('/clients', (req, res)=>{  
+router.get('/Client/clients', (req, res)=>{  
     mysqlConnection.query('SELECT * FROM credi_client', (err, rows, fields)=>{
         if(!err){
             res.json(rows);
@@ -23,19 +24,23 @@ router.get('/clients', (req, res)=>{
     });
 });
 
-router.post('/clients', (req, res)=>{
-    const{
-        first_name,
-        mid_name,
-        last_name,
-        secondary_last_name,
-        national_id,
-        sys_code,
-        phone,
-        status_id
-    } = req.body;
-    mysqlConnection.query('INSERT INTO `credi_client`(`first_name`, `mid_name`, `last_name`, `secondary_last_name`, `national_id`, `sys_code`, `phone`, `status_id`) VALUES (first_name, mid_name, last_name, secondary_lasT_name, national_id, sys_code, phone, status_id)', [first_name, mid_name, last_name, secondary_last_name, national_id, sys_code, phone, status_id]);
-})
+router.post('/Client/clients',async function(req, res, next){
+    try{
+        res.json(await insertClient.create(req.body));
+    }catch(err){
+        console.error('Error al crear el cliente', err.message);
+        next(err);
+    }
+});
+
+router.put('/:id', async function(req, res, next){
+    try{
+        res.json(await client.update(req.params.id, req.body));
+    }catch(err){
+        console.error(`Error al tratar de actualizar al cliente`, err.message);
+        next(err);
+    }
+});
 
 router.get('/:id', (req, res)=>{
     const {id} = req.params;
