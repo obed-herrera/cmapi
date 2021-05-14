@@ -24,6 +24,7 @@ app.use(function(req, res, next){
 app.use(require('./routes/Client/clients'));
 app.use(require('./routes/Line/lines'));
 app.use(require('./routes/LoanArea/loanarea'));
+app.use(require('./routes/Item/items'));
 
 //starting the server
 app.listen(3001, ()=>{
