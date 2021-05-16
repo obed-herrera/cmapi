@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-const insertLineAction = require('./insertlineAction');
+const insertLineAction = require('./insertLineAction');
 
 app.use(function(req, res, next){
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
