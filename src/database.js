@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 const mysqlConnection = mysql.createConnection({
-    host: 'localhost',
+    host: 'https://credimarketnic.com',
     user: 'root',
     password: '',
     database: 'nb_credimarket'
