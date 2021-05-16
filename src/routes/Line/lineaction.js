@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-const insertLine = require('./insertline');
+const insertLineAction = require('./insertlineAction');
 
 app.use(function(req, res, next){
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -14,8 +14,8 @@ app.use(function(req, res, next){
 
 const mysqlConnection = require('../../database');
 
-router.get('/Line/lines', (req, res)=>{  
-    mysqlConnection.query('SELECT * FROM credi_line', (err, rows, fields)=>{
+router.get('/Line/lineaction', (req, res)=>{  
+    mysqlConnection.query('SELECT * FROM credi_line_action', (err, rows, fields)=>{
         if(!err){
             res.json(rows);
         }else{
@@ -25,25 +25,15 @@ router.get('/Line/lines', (req, res)=>{
 });
 
 
-router.post('/Line/lines',async function(req, res, next){
+router.post('/Line/lineaction',async function(req, res, next){
     try{
-        res.json(await insertLine.create(req.body));
+        res.json(await insertLineAction.create(req.body));
     }catch(err){
         console.error('Error al crear la linea', err.message);
         next(err);
     }
 });
 
-router.get('/:id', (req, res)=>{
-    const {id} = req.params;
-    console.log(id);
-    mysqlConnection.query('SELECT * FROM credi_line WHERE id = ?', [id], (err, rows, fields)=>{
-        if(!err){
-            res.json(rows);
-        }else{
-            console.log(err);
-        }
-    });
-});
+
 
 module.exports = router;

@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const insertClient = require('./insertclients');
+const getClient = require('./getClient');
 
 app.use(function(req, res, next){
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -11,6 +12,7 @@ app.use(function(req, res, next){
 
     next();
 });  
+
 
 const mysqlConnection = require('../../database');
 
@@ -23,6 +25,8 @@ router.get('/Client/clients', (req, res)=>{
         }
     });
 });
+
+
 
 router.post('/Client/clients',async function(req, res, next){
     try{
