@@ -16,7 +16,7 @@ app.use(function(req, res, next){
 
 const mysqlConnection = require('../../database');
 
-router.get('https://credimarketnic.com/Client/clients', (req, res)=>{  
+router.get('/Client/clients', (req, res)=>{  
     mysqlConnection.query('SELECT * FROM credi_client', (err, rows, fields)=>{
         if(!err){
             res.json(rows);
